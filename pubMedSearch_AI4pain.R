@@ -393,7 +393,7 @@ MLmethods <- c(
   "perceptron",
   "forest",
   "nearest nei|k near|k-near",
-  "GAN|generative adver",
+  "generative adver",
   "reinforcement learn",
   "k-means|kmeans|k means",
   "dbscan",
@@ -408,6 +408,26 @@ for (i in 1:length(MLmethods)) {
   dfMLmethods$MLmethods[i] <-
     length(intersect(whichIDs_MLmethods, whichIDs_pain))
 }
+
+# Search for XAI
+whichIDs_XAI <-
+  grep("xai|explainable art", tolower(AI4painAbstracts))
+whichIDs_pain <- grep("pain|analgesi", tolower(AI4painAbstracts))
+length(intersect(whichIDs_XAI, whichIDs_pain))
+
+# Search for laboratory animals
+labanimals <-
+  c("rats",
+    "mice|mouse")
+dfLabanimals <- data.frame(labanimals)
+for (i in 1:length(labanimals)) {
+  whichIDs_labanimals <-
+    grep(labanimals[i], tolower(AI4painAbstracts))
+  whichIDs_pain <- grep("pain|analgesi", tolower(AI4painAbstracts))
+  dfLabanimals$labanimals[i] <-
+    length(intersect(whichIDs_labanimals, whichIDs_pain))
+}
+
 
 # Wordcloud of abstracts
 library(PubMedWordcloud)
