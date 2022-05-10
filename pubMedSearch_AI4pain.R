@@ -396,10 +396,11 @@ MLmethods <- c(
   "generative adver",
   "reinforcement learn",
   "k-means|kmeans|k means",
-  "dbscan",
+  "dbscan|spatial clus",
   "pca|principal comp",
   "independent comp",
-  "t-sne|tsne|t-distrib|t distrib"
+  "t-sne|tsne|t-distrib|t distrib",
+  "self organi|self-organi|esom"
 )
 dfMLmethods <- data.frame(MLmethods)
 for (i in 1:length(MLmethods)) {
