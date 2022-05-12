@@ -129,9 +129,10 @@ for (i in 1:nrow(dfAi4painPubsearchCountry)) {
     )
   resYearCountry <-
     EUtilsSummary(my_query1,
-                  type = "esearch",
-                  db = "pubmed",
-                  retmax = 9999999)
+      type = "esearch",
+      db = "pubmed",
+      retmax = 9999999
+    )
   r1 <- EUtilsGet(resYearCountry)
   AI4painAbstracts_0_C <- AbstractText(r1)
   whichIDs_AI <-
@@ -159,9 +160,10 @@ for (i in 1:nrow(dfAi4painPubsearchCountry)) {
         )
       resYearCountry <-
         EUtilsSummary(my_query1,
-                      type = "esearch",
-                      db = "pubmed",
-                      retmax = 9999999)
+          type = "esearch",
+          db = "pubmed",
+          retmax = 9999999
+        )
       r1 <- EUtilsGet(resYearCountry)
       AI4painAbstracts_0_C <- AbstractText(r1)
       whichIDs_AI <-
@@ -205,7 +207,7 @@ names(WorldPopulationCountries)[grep("X", names(WorldPopulationCountries))] <-
 
 WorldPopulationCountries1 <-
   WorldPopulationCountries[, which(as.integer(names(WorldPopulationCountries)) >=
-                                     as.integer(names(AI4painPubYear[min(which(AI4painPubYear > 0))])))]
+    as.integer(names(AI4painPubYear[min(which(AI4painPubYear > 0))])))]
 # names(WorldPopulationCountries1)
 WorldPopulationCountries$MeanPop <-
   apply(WorldPopulationCountries1, 1, mean)
@@ -217,8 +219,10 @@ WorldPopulationCountries$Country.Code <-
   )
 
 dfAi4painPubsearchCountry$MeanPop <-
-  WorldPopulationCountries$MeanPop[match(dfAi4painPubsearchCountry$Country.Code,
-                                         WorldPopulationCountries$Country.Code)]
+  WorldPopulationCountries$MeanPop[match(
+    dfAi4painPubsearchCountry$Country.Code,
+    WorldPopulationCountries$Country.Code
+  )]
 dfAi4painPubsearchCountry$PublicationsAI4pain_per_meanPop <-
   slog(dfAi4painPubsearchCountry$PublicationsAI4pain) / slog(dfAi4painPubsearchCountry$MeanPop)
 dfAi4painPubsearchCountry$PublicationsAI4pain_log <-
@@ -241,7 +245,7 @@ smaller.data_pub <-
   ))
 names(smaller.data_pub) <- c("Country.Code", "Population")
 smaller.data_pub <-
-  smaller.data_pub[smaller.data_pub$Population > 0,]
+  smaller.data_pub[smaller.data_pub$Population > 0, ]
 # smaller.data_pub$Country.Code <- factor(smaller.data_pub$Country.Code)
 dim(smaller.data_pub)
 # str(smaller.data_pub)
@@ -251,21 +255,23 @@ world <-
 matched.indices <-
   match(world@data[, "ISO3"], smaller.data_pub[, "Country.Code"])
 world@data <-
-  cbind.data.frame(world@data, smaller.data_pub[matched.indices,])
-world@data[is.na(world@data$Population),] <- 0.0001
+  cbind.data.frame(world@data, smaller.data_pub[matched.indices, ])
+world@data[is.na(world@data$Population), ] <- 0.0001
 world.carto <- quick.carto(world, world@data$Population, blur = 0.5)
 world.f <- fortify(world.carto, region = "Country.Code")
 world.f <-
   merge(world.f, world@data, by.x = "id", by.y = "Country.Code")
 Cartogram_Ai4pain <-
-  ggplot(world.f,
-         aes(
-           long,
-           lat,
-           group = group,
-           colour = factor(1),
-           fill = Population
-         )) +
+  ggplot(
+    world.f,
+    aes(
+      long,
+      lat,
+      group = group,
+      colour = factor(1),
+      fill = Population
+    )
+  ) +
   geom_polygon(size = .1) +
   scale_fill_gradientn(colours = rev(inferno(256)), na.value = "grey90") +
   scale_color_manual(values = "dodgerblue") +
@@ -275,8 +281,10 @@ Cartogram_Ai4pain <-
     legend.position = c(.1, .2),
     panel.background = element_rect(fill = "aliceblue", colour = "white")
   ) +
-  labs(fill = "log Publications",
-       title = "Cartogram of PubMed articles on AI and machine learning in pain-related data")
+  labs(
+    fill = "log Publications",
+    title = "Cartogram of PubMed articles on AI and machine learning in pain-related data"
+  )
 
 smaller.data_pub <-
   data.frame(subset(
@@ -285,7 +293,7 @@ smaller.data_pub <-
   ))
 names(smaller.data_pub) <- c("Country.Code", "Population")
 smaller.data_pub <-
-  smaller.data_pub[smaller.data_pub$Population > 0,]
+  smaller.data_pub[smaller.data_pub$Population > 0, ]
 # smaller.data_pub$Country.Code <- factor(smaller.data_pub$Country.Code)
 dim(smaller.data_pub)
 # str(smaller.data_pub)
@@ -295,22 +303,24 @@ world1 <-
 matched.indices <-
   match(world1@data[, "ISO3"], smaller.data_pub[, "Country.Code"])
 world1@data <-
-  cbind.data.frame(world1@data, smaller.data_pub[matched.indices,])
-world1@data[is.na(world1@data$Population),] <- 0.0001
+  cbind.data.frame(world1@data, smaller.data_pub[matched.indices, ])
+world1@data[is.na(world1@data$Population), ] <- 0.0001
 world1.carto <-
   quick.carto(world1, world1@data$Population, blur = 0.5)
 world1.f <- fortify(world1.carto, region = "Country.Code")
 world1.f <-
   merge(world1.f, world1@data, by.x = "id", by.y = "Country.Code")
 Cartogram_Ai4pain_per_MeanPop <-
-  ggplot(world1.f,
-         aes(
-           long,
-           lat,
-           group = group,
-           colour = factor(1),
-           fill = Population
-         )) +
+  ggplot(
+    world1.f,
+    aes(
+      long,
+      lat,
+      group = group,
+      colour = factor(1),
+      fill = Population
+    )
+  ) +
   geom_polygon(size = .1) +
   scale_fill_gradientn(colours = rev(inferno(256)), na.value = "grey90") +
   scale_color_manual(values = "dodgerblue") +
@@ -320,8 +330,10 @@ Cartogram_Ai4pain_per_MeanPop <-
     legend.position = c(.1, .23),
     panel.background = element_rect(fill = "azure", colour = "white")
   ) +
-  labs(fill = "log Publications\nper log population",
-       title = "Cartogram of PubMed articles on AI and machine learning in pain-related data per population size")
+  labs(
+    fill = "log Publications\nper log population",
+    title = "Cartogram of PubMed articles on AI and machine learning in pain-related data per population size"
+  )
 
 ggarrange(
   AI4painPubYear_barplot,
@@ -400,7 +412,9 @@ MLmethods <- c(
   "pca|principal comp",
   "independent comp",
   "t-sne|tsne|t-distrib|t distrib",
-  "self organi|self-organi|esom"
+  "self organi|self-organi|esom",
+  "natural lang",
+  "knowledge dicover"
 )
 dfMLmethods <- data.frame(MLmethods)
 for (i in 1:length(MLmethods)) {
@@ -418,8 +432,10 @@ length(intersect(whichIDs_XAI, whichIDs_pain))
 
 # Search for laboratory animals
 labanimals <-
-  c("rats",
-    "mice|mouse")
+  c(
+    "rats",
+    "mice|mouse"
+  )
 dfLabanimals <- data.frame(labanimals)
 for (i in 1:length(labanimals)) {
   whichIDs_labanimals <-
@@ -433,28 +449,49 @@ for (i in 1:length(labanimals)) {
 # Wordcloud of abstracts
 library(PubMedWordcloud)
 library(ggthemes)
+library(ggwordcloud)
 
 cleanAbs <- cleanAbstracts(AI4painAbstracts)
 head(cleanAbs)
 Kafka <-
   read.csv(
-    "~/.Datenplatte/Joerns Dateien/Aktuell/AI4pain/08AnalyseProgramme/Kafka.txt",
+    "~/.Datenplatte/Joerns Dateien/Aktuell/AI4pain/08AnalyseProgramme/AI4pain/Kafka.txt",
     sep = ""
   )
 PNAS <-
   read.csv(
-    "~/.Datenplatte/Joerns Dateien/Aktuell/AI4pain/08AnalyseProgramme/PNAS.txt",
+    "~/.Datenplatte/Joerns Dateien/Aktuell/AI4pain/08AnalyseProgramme/AI4pain/PNAS.txt",
     sep = ""
   )
 Words_unique <- unique(c(Kafka$WordsKafka, PNAS$X))
-cleanAbs <- cleanAbs[!cleanAbs$word %in% Words_unique,]
+cleanAbs <- cleanAbs[!cleanAbs$word %in% Words_unique, ]
 head(cleanAbs)
-plotWordCloud(
-  cleanAbs,
-  min.freq = 2,
-  scale = c(8, 1),
-  colors = colorblind_pal()(8)[2:8]
-)
+# set.seed(7)
+# plotWordCloud(
+#   cleanAbs,
+#   min.freq = 2,
+#   scale = c(8, 1),
+#   colors = colorblind_pal()(8)[2:8]
+# )
+
+set.seed(7)
+cleanAbs["angle"] <-
+  45 * sample(-2:2,
+    length(cleanAbs[, 2] >= 50),
+    replace = TRUE,
+    prob = c(1, 1, 4, 1, 1)
+  )
+ggplot(data = cleanAbs[cleanAbs[, 2] >= 50, ], aes(
+  label = word,
+  size = freq,
+  color = freq,
+  angle = angle
+)) +
+  geom_text_wordcloud_area(shape = "square") +
+  scale_size_area(max_size = 40) +
+  theme_minimal()
+
+
 
 ######################### Anaylzsed sample sizes ###################################
 
@@ -463,15 +500,27 @@ capture.output(AI4painAbstracts, file = "AI4painAbstracts.txt")
 
 # sample sizes manually extracted from abstracts
 library(readxl)
-AI4painAbstracts2_BM <-
+AI4painAbstracts2_BM <- data.frame(
   read_excel(
-    "~/.Datenplatte/Joerns Dateien/Aktuell/AI4pain/09Originale/AI4painAbstracts2_BM.xlsx",
+    "~/.Datenplatte/Joerns Dateien/Aktuell/AI4pain/09Originale/AI4painAbstracts2_BM_korr.xlsx",
+    col_names = FALSE,
+    col_types = c(
+      "text",
+      "numeric",
+      "text"
+    )
+  )
+)
+
+AI4painAbstracts_DK <- data.frame(
+  read_excel(
+    "~/.Datenplatte/Joerns Dateien/Aktuell/AI4pain/09Originale/AI4painAbstracts_DK_korr.xlsx",
     col_names = FALSE,
     col_types = c(
       "text",
       "numeric",
       "text",
-      "numeric",
+      "text",
       "numeric",
       "numeric",
       "numeric",
@@ -481,7 +530,13 @@ AI4painAbstracts2_BM <-
       "text"
     )
   )
-sample.sizes_2 <- na.omit(AI4painAbstracts2_BM[, 2])
+)
+
+
+sample.sizes_2 <-
+  data.frame(na.omit(c(
+    AI4painAbstracts2_BM[, 2], AI4painAbstracts_DK[, 2]
+  )))
 names(sample.sizes_2) <- "SampleSizes"
 range(sample.sizes_2$SampleSizes)
 table(sample.sizes_2$SampleSizes)
@@ -493,5 +548,7 @@ ggplot(data = sample.sizes_2, aes(x = log10(SampleSizes))) +
     fill = "white"
   ) +
   geom_density(aes(y = ..count..), fill = "dodgerblue", alpha = .2) +
-  labs(title = "Sample sizes in pain-related studies analyzed with machine-learning", y = "Count of reports", x = "Log10 sample sizes from abstracts") +
+  labs( # title = "Sample sizes in pain-related studies analyzed with machine-learning",
+    y = "Count of reports", x = "Log10 sample sizes from abstracts"
+  ) +
   theme_linedraw()
