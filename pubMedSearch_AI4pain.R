@@ -238,53 +238,53 @@ library(data.table)
 library(viridis)
 library(ggthemes)
 
-smaller.data_pub <-
-  data.frame(subset(
-    dfAi4painPubsearchCountry,
-    select = c("Country.Code", "PublicationsAI4pain_log")
-  ))
-names(smaller.data_pub) <- c("Country.Code", "Population")
-smaller.data_pub <-
-  smaller.data_pub[smaller.data_pub$Population > 0, ]
-# smaller.data_pub$Country.Code <- factor(smaller.data_pub$Country.Code)
-dim(smaller.data_pub)
-# str(smaller.data_pub)
-# smaller.data_pub$Population[smaller.data_pub$Population == 0] <- .0001
-world <-
-  readShapePoly(paste0(pfad_o, pfad_u1, "TM_WORLD_BORDERS-0.3.shp"))
-matched.indices <-
-  match(world@data[, "ISO3"], smaller.data_pub[, "Country.Code"])
-world@data <-
-  cbind.data.frame(world@data, smaller.data_pub[matched.indices, ])
-world@data[is.na(world@data$Population), ] <- 0.0001
-world.carto <- quick.carto(world, world@data$Population, blur = 0.5)
-world.f <- fortify(world.carto, region = "Country.Code")
-world.f <-
-  merge(world.f, world@data, by.x = "id", by.y = "Country.Code")
-Cartogram_Ai4pain <-
-  ggplot(
-    world.f,
-    aes(
-      long,
-      lat,
-      group = group,
-      colour = factor(1),
-      fill = Population
-    )
-  ) +
-  geom_polygon(size = .1) +
-  scale_fill_gradientn(colours = rev(inferno(256)), na.value = "grey90") +
-  scale_color_manual(values = "dodgerblue") +
-  guides(color = "none") +
-  theme_bw() +
-  theme(
-    legend.position = c(.1, .2),
-    panel.background = element_rect(fill = "aliceblue", colour = "white")
-  ) +
-  labs(
-    fill = "log Publications",
-    title = "Cartogram of PubMed articles on AI and machine learning in pain-related data"
-  )
+# smaller.data_pub <-
+#   data.frame(subset(
+#     dfAi4painPubsearchCountry,
+#     select = c("Country.Code", "PublicationsAI4pain_log")
+#   ))
+# names(smaller.data_pub) <- c("Country.Code", "Population")
+# smaller.data_pub <-
+#   smaller.data_pub[smaller.data_pub$Population > 0, ]
+# # smaller.data_pub$Country.Code <- factor(smaller.data_pub$Country.Code)
+# dim(smaller.data_pub)
+# # str(smaller.data_pub)
+# # smaller.data_pub$Population[smaller.data_pub$Population == 0] <- .0001
+# world <-
+#   readShapePoly(paste0(pfad_o, pfad_u1, "TM_WORLD_BORDERS-0.3.shp"))
+# matched.indices <-
+#   match(world@data[, "ISO3"], smaller.data_pub[, "Country.Code"])
+# world@data <-
+#   cbind.data.frame(world@data, smaller.data_pub[matched.indices, ])
+# world@data[is.na(world@data$Population), ] <- 0.0001
+# world.carto <- quick.carto(world, world@data$Population, blur = 0.5)
+# world.f <- fortify(world.carto, region = "Country.Code")
+# world.f <-
+#   merge(world.f, world@data, by.x = "id", by.y = "Country.Code")
+# Cartogram_Ai4pain <-
+#   ggplot(
+#     world.f,
+#     aes(
+#       long,
+#       lat,
+#       group = group,
+#       colour = factor(1),
+#       fill = Population
+#     )
+#   ) +
+#   geom_polygon(size = .1) +
+#   scale_fill_gradientn(colours = rev(inferno(256)), na.value = "grey90") +
+#   scale_color_manual(values = "dodgerblue") +
+#   guides(color = "none") +
+#   theme_bw() +
+#   theme(
+#     legend.position = c(.1, .2),
+#     panel.background = element_rect(fill = "aliceblue", colour = "white")
+#   ) +
+#   labs(
+#     fill = "log Publications",
+#     title = "Cartogram of PubMed articles on AI and machine learning in pain-related data"
+#   )
 
 smaller.data_pub <-
   data.frame(subset(
