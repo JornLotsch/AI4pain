@@ -540,14 +540,15 @@ sample.sizes_2 <-
 names(sample.sizes_2) <- "SampleSizes"
 range(sample.sizes_2$SampleSizes)
 table(sample.sizes_2$SampleSizes)
+
 ggplot(data = sample.sizes_2, aes(x = log10(SampleSizes))) +
   geom_histogram(
     aes(y = ..count..),
     binwidth = 1,
     colour = "grey50",
-    fill = "white"
+    fill = "grey80"
   ) +
-  geom_density(aes(y = ..count..), fill = "dodgerblue", alpha = .2) +
+  geom_density(aes(y = ..count..), fill = "dodgerblue", color = "dodgerblue2", size = 1, alpha = .2) +
   labs( # title = "Sample sizes in pain-related studies analyzed with machine-learning",
     y = "Count of reports", x = "Log10 sample sizes from abstracts"
   ) +
