@@ -32,7 +32,7 @@ for (i in 1945:2022) {
   AI4painAbstracts_0 <- AbstractText(r1)
   whichIDs_AI <-
     grep(
-      "machine-learning|machine learning|machine-learned|machine learned|artificial intelligence|explainable AI|explainable artificial intelligence|XAI|knowledge discovery|deep learning",
+      "machine-learning|machine learning|machine-learned|machine learned|artificial intelligence|explainable ai|explainable artificial intelligence|xai|knowledge discovery|deep learning",
       tolower(AI4painAbstracts_0)
     )
   whichIDs_paintypes <-
@@ -137,7 +137,7 @@ for (i in 1:nrow(dfAi4painPubsearchCountry)) {
   AI4painAbstracts_0_C <- AbstractText(r1)
   whichIDs_AI <-
     grep(
-      "machine-learning|machine learning|machine-learned|machine learned|artificial intelligence|explainable AI|explainable artificial intelligence|XAI|knowledge discovery|deep learning",
+      "machine-learning|machine learning|machine-learned|machine learned|artificial intelligence|explainable ai|explainable artificial intelligence|xai|knowledge discovery|deep learning",
       tolower(AI4painAbstracts_0_C)
     )
   whichIDs_paintypes <-
@@ -168,7 +168,7 @@ for (i in 1:nrow(dfAi4painPubsearchCountry)) {
       AI4painAbstracts_0_C <- AbstractText(r1)
       whichIDs_AI <-
         grep(
-          "machine-learning|machine learning|machine-learned|machine learned|artificial intelligence|explainable AI|explainable artificial intelligence|XAI|knowledge discovery|deep learning",
+          "machine-learning|machine learning|machine-learned|machine learned|artificial intelligence|explainable ai|explainable artificial intelligence|xai|knowledge discovery|deep learning",
           tolower(AI4painAbstracts_0_C)
         )
       whichIDs_paintypes <-
