@@ -12,6 +12,8 @@ my_query <-
 
 ######################### PubMed query ###################################
 # https://davetang.org/muse/2013/10/31/querying-pubmed-using-r/
+library(RISmed)
+
 AI4painPubYear <- array()
 AI4painAbstracts_0 <- list()
 AI4painAbstracts <- list()
@@ -496,7 +498,7 @@ ggplot(data = cleanAbs[cleanAbs[, 2] >= 50, ], aes(
 ######################### Anaylzsed sample sizes ###################################
 
 # Prepare for manual extraction from abstracts
-capture.output(AI4painAbstracts, file = "AI4painAbstracts.txt")
+# capture.output(AI4painAbstracts, file = "AI4painAbstracts.txt")
 
 # sample sizes manually extracted from abstracts
 library(readxl)
