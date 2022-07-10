@@ -399,7 +399,7 @@ for (i in 1:length(painsettings)) {
 }
 
 # Search for ML methods
-MLmethods <- c(
+MLmethods <- tolower(c(
   "autoencoder",
   "support vector",
   "regression",
@@ -417,14 +417,33 @@ MLmethods <- c(
   "self organi|self-organi|esom",
   "natural lang",
   "knowledge dicover"
-)
+))
 dfMLmethods <- data.frame(MLmethods)
+dfMLmethods$Times <- 0
 for (i in 1:length(MLmethods)) {
   whichIDs_MLmethods <- grep(MLmethods[i], tolower(AI4painAbstracts))
   whichIDs_pain <- grep("pain|analgesi", tolower(AI4painAbstracts))
-  dfMLmethods$MLmethods[i] <-
+  dfMLmethods$Times[i] <-
     length(intersect(whichIDs_MLmethods, whichIDs_pain))
 }
+dfMLmethodsO <- dfMLmethods[order(as.integer(dfMLmethods$Times), decreasing = T),]
+
+#Search for PCA only
+MLmethodsNoPCA <- MLmethods[!MLmethods %in% c("pca|principal comp")]
+whichIDs_MLmethodsPCA <- grep("pca|principal comp", tolower(AI4painAbstracts))
+whichIDs_pain <- grep("pain|analgesi", tolower(AI4painAbstracts))
+whichIDs_MLmethodsNoPCA <- c()
+for (i in 1:length(MLmethodsNoPCA)) {
+  whichIDs_MLmethodsNoPCA <- append(whichIDs_MLmethodsNoPCA, grep(MLmethodsNoPCA[i], tolower(AI4painAbstracts)))
+}
+AparentlyPCAonly <- setdiff(whichIDs_MLmethodsPCA, intersect(whichIDs_MLmethodsNoPCA, whichIDs_pain))
+AI4painAbstracts[AparentlyPCAonly]
+
+whichIDs_PCAonly <-
+  grep("pca|principal comp", tolower(AI4painAbstracts))
+
+whichIDs_pain <- grep("pain|analgesi", tolower(AI4painAbstracts))
+length(intersect(whichIDs_XAI, whichIDs_pain))
 
 # Search for XAI
 whichIDs_XAI <-
@@ -446,6 +465,13 @@ for (i in 1:length(labanimals)) {
   dfLabanimals$labanimals[i] <-
     length(intersect(whichIDs_labanimals, whichIDs_pain))
 }
+
+# Search for patient-controlled analgesia
+whichIDs_PatientControlledAnalgesia <-
+  grep("patient-controlled analgesia|patient controlled analgesia", tolower(AI4painAbstracts))
+whichIDs_pain <- grep("pain|analgesi", tolower(AI4painAbstracts))
+length(intersect(whichIDs_PatientControlledAnalgesia, whichIDs_pain))
+AI4painAbstracts[intersect(whichIDs_PatientControlledAnalgesia, whichIDs_pain)]
 
 
 # Wordcloud of abstracts
