@@ -416,7 +416,8 @@ MLmethods <- tolower(c(
   "t-sne|tsne|t-distrib|t distrib",
   "self organi|self-organi|esom",
   "natural lang",
-  "knowledge dicover"
+  "knowledge dicover",
+  "deep learning"
 ))
 dfMLmethods <- data.frame(MLmethods)
 dfMLmethods$Times <- 0
@@ -426,9 +427,9 @@ for (i in 1:length(MLmethods)) {
   dfMLmethods$Times[i] <-
     length(intersect(whichIDs_MLmethods, whichIDs_pain))
 }
-dfMLmethodsO <- dfMLmethods[order(as.integer(dfMLmethods$Times), decreasing = T),]
+dfMLmethodsO <- dfMLmethods[order(as.integer(dfMLmethods$Times), decreasing = T), ]
 
-#Search for PCA only
+# Search for PCA only
 MLmethodsNoPCA <- MLmethods[!MLmethods %in% c("pca|principal comp")]
 whichIDs_MLmethodsPCA <- grep("pca|principal comp", tolower(AI4painAbstracts))
 whichIDs_pain <- grep("pain|analgesi", tolower(AI4painAbstracts))
@@ -450,6 +451,13 @@ whichIDs_XAI <-
   grep("xai|explainable art", tolower(AI4painAbstracts))
 whichIDs_pain <- grep("pain|analgesi", tolower(AI4painAbstracts))
 length(intersect(whichIDs_XAI, whichIDs_pain))
+
+# Search for "XAI"Deep learning
+whichIDs_DeepLearing <-
+  grep("deep learning", tolower(AI4painAbstracts))
+whichIDs_pain <- grep("pain|analgesi", tolower(AI4painAbstracts))
+length(intersect(whichIDs_DeepLearing, whichIDs_pain))
+capture.output(AI4painAbstracts[whichIDs_DeepLearing], file = "DeepLearingAbstracts.txt")
 
 # Search for laboratory animals
 labanimals <-
@@ -481,6 +489,9 @@ library(ggwordcloud)
 
 cleanAbs <- cleanAbstracts(AI4painAbstracts)
 head(cleanAbs)
+length(AI4painAbstracts)
+length(grep("patient", tolower(AI4painAbstracts)))
+
 Kafka <-
   read.csv(
     "~/.Datenplatte/Joerns Dateien/Aktuell/AI4pain/08AnalyseProgramme/AI4pain/Kafka.txt",
