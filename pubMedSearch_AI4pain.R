@@ -451,6 +451,7 @@ whichIDs_XAI <-
   grep("xai|explainable art", tolower(AI4painAbstracts))
 whichIDs_pain <- grep("pain|analgesi", tolower(AI4painAbstracts))
 length(intersect(whichIDs_XAI, whichIDs_pain))
+AI4painAbstracts[whichIDs_XAI]
 
 # Search for "XAI"Deep learning
 whichIDs_DeepLearing <-
